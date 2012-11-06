@@ -1,42 +1,124 @@
 <!DOCTYPE html>
-<!--
-    Licensed to the Apache Software Foundation (ASF) under one
-    or more contributor license agreements.  See the NOTICE file
-    distributed with this work for additional information
-    regarding copyright ownership.  The ASF licenses this file
-    to you under the Apache License, Version 2.0 (the
-    "License"); you may not use this file except in compliance
-    with the License.  You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-    Unless required by applicable law or agreed to in writing,
-    software distributed under the License is distributed on an
-    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-     KIND, either express or implied.  See the License for the
-    specific language governing permissions and limitations
-    under the License.
--->
 <html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <meta name="format-detection" content="telephone=no" />
-        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
-        <link rel="stylesheet" type="text/css" href="css/index.css" />
-        <title>Hello World</title>
-    </head>
-    <body>
-        <div class="app">
-            <h1>Apache Cordova</h1>
-            <div id="deviceready" class="blink">
-                <p class="event listening">Connecting to Device</p>
-                <p class="event received">Device is Ready</p>
-            </div>
-        </div>
-        <script type="text/javascript" src="cordova-2.2.0.js"></script>
-        <script type="text/javascript" src="js/index.js"></script>
-        <script type="text/javascript">
-            app.initialize();
-        </script>
-    </body>
+  <head>
+	<link rel="stylesheet" href="css/my.css" />
+	<link rel="stylesheet" href="lib/jquery-mobile-fluid960/jquery-mobile-fluid960.min.css" />"
+	<link rel="stylesheet" href="lib/jquery-mobile/jquery.mobile-1.2.0.min.css" />
+	<script type="text/javascript" src="cordova-2.2.0.js"></script>
+    <!-- <script type="text/javascript" src="js/index.js"></script> -->
+	<script src="lib/jquery/jquery-1.8.2.min.js"></script> 
+	<script src="lib/jquery-mobile/jquery.mobile-1.2.0.min.js"></script>
+	<script src="lib/jquery.mobile.routerlite/jquery.mobile.routerlite.js"></script>
+	<script src="js/my.js"></script>
+	<script src="js/phone.js"></script>
+    <title>Capture Photo test</title>
+  </head>
+  <body>
+	
+	<!-- move me -->
+	<style>	
+		.nav-icons-custom .ui-btn .ui-btn-inner { padding-top: 40px !important; }
+		.nav-icons-custom .ui-btn .ui-icon { width: 30px!important; height: 30px!important; margin-left: -15px !important; box-shadow: none!important; -moz-box-shadow: none!important; -webkit-box-shadow: none!important; -webkit-border-radius: 0 !important; border-radius: 0 !important; }
+		#capture .ui-icon { background:  url(img/bottom-menu-icon-capture-.png) 50% 500% no-repeat; background-size: 30px 30px; }
+		#gallery .ui-icon { background:  url(img/bottom-menu-icon-gallery.png) 50% 50% no-repeat; background-size: 30px 30px;  }
+		#animate .ui-icon { background:  url(img/bottom-menu-icon-animate-.png) 50% 50% no-repeat;  background-size: 30px 30px; }
+	</style>
+	
+
+<!-- Loading Page-->
+	      <div data-role="page" id="loading-page">
+	       	<div id="App Header" data-theme="a" data-role="header">
+				<h1>Mustache Monitor</h1>
+	       	</div>
+	      	<div data-role="content">
+				<center>
+					<img src="img/Mustache-Monitor-trans.png" alt="Ron!" height="120" width="400" />
+				</center>
+				<a href="#capture-page" data-role="button" data-theme="b" data-icon="arrow-r" data-iconpos="right">Let's get started!</a>
+				<p>
+					Mustache Monitor was conceived on the eve of Movember - the preeminent month to raise awareness for Men's health. During Movember Men around the globe sprout upper lip hair and show off their industrious stache growth.  
+					Mustache Monitor is an iOS app to document daily stache production and create an animation of your incredible journey through Movember. What's better then having a robust stache? Sharing it with the world. 
+					Show your MO!
+				</p>	
+			</div>
+			<div data-role="footer" data-position="fixed">		
+				<h4>Share Your Stache!</h4>
+			</div><!-- /footer -->
+		</div><!--page-->
+
+<!-- Capture Page-->
+      <div data-role="page" id="capture-page">
+       	<div id="App Header" data-theme="a" data-role="header">
+			<h1>Mustache Monitor</h1>
+       	</div>
+      	<div data-role="content">
+			<button onclick="capturePhoto();">Capture Photo</button> <br>
+		    <button onclick="capturePhotoEdit();">Capture Editable Photo</button> <br>
+		    <button onclick="getPhoto(pictureSource.PHOTOLIBRARY);">From Photo Library</button><br>
+		    <button onclick="getPhoto(pictureSource.SAVEDPHOTOALBUM);">From Photo Album</button><br>
+			<button onclick="getImage();">Upload a Photo</button>
+		    <img style="display:none;width:60px;height:60px;" id="smallImage" src="" />
+		    <img style="display:none;" id="largeImage" src="" />	
+		</div>
+		<div data-role="footer"  data-id="myfooter" data-position="fixed">		
+			<div data-role="navbar" class="nav-icons-custom" data-grid="b">
+				<ul>
+					<li><a href="#capture-page" id="capture" data-icon="custom" class="ui-btn-active ui-state-persist"></a></li>
+					<li><a href="#gallery-page" id="gallery" data-icon="custom"></a></li>
+					<li><a href="#animate-page" id="animate" data-icon="custom"></a></li>
+				</ul>
+			</div><!-- /navbar -->
+		</div><!-- /footer -->
+	</div><!--page-->
+
+<!-- Gallery Page-->
+      <div data-role="page" id="gallery-page">
+       	<div id="App Header" data-theme="a" data-role="header">
+			<h1>Mustache Monitor</h1>
+       	</div>
+      	<div data-role="content">
+			<div class="ui-grid-b">
+				<div class="ui-block-a"><div class="ui-bar ui-bar-e" style="height:120px"><img src="img/borat.jpeg" alt="Borat" height="120" width="120" /></div></div>
+				<div class="ui-block-b"><div class="ui-bar ui-bar-e" style="height:120px"><img src="img/borat.jpeg" alt="Borat" height="120" width="120" /></div></div>
+				<div class="ui-block-c"><div class="ui-bar ui-bar-e" style="height:120px"><img src="img/borat.jpeg" alt="Borat" height="120" width="120" /></div></div>
+				<div class="ui-block-a"><div class="ui-bar ui-bar-e" style="height:120px"><img src="img/borat.jpeg" alt="Borat" height="120" width="120" /></div></div>
+				<div class="ui-block-b"><div class="ui-bar ui-bar-e" style="height:120px"><img src="img/borat.jpeg" alt="Borat" height="120" width="120" /></div></div>
+				<div class="ui-block-c"><div class="ui-bar ui-bar-e" style="height:120px"><img src="img/borat.jpeg" alt="Borat" height="120" width="120" /></div></div>
+				<div class="ui-block-a"><div class="ui-bar ui-bar-e" style="height:120px"><img src="img/borat.jpeg" alt="Borat" height="120" width="120" /></div></div>
+				<div class="ui-block-b"><div class="ui-bar ui-bar-e" style="height:120px"><img src="img/borat.jpeg" alt="Borat" height="120" width="120" /></div></div>
+				<div class="ui-block-c"><div class="ui-bar ui-bar-e" style="height:120px"><img src="img/borat.jpeg" alt="Borat" height="120" width="120" /></div></div>
+			</div><!-- /grid-c -->		
+		</div>
+		<div data-role="footer"  data-id="myfooter" data-position="fixed">		
+			<div data-role="navbar" class="nav-icons-custom" data-grid="b">
+				<ul>
+					<li><a href="#capture-page" id="capture" data-icon="custom"></a></li>
+					<li><a href="#gallery-page" id="gallery" data-icon="custom"class="ui-btn-active ui-state-persist"></a></li>
+					<li><a href="#animate-page" id="animate" data-icon="custom"></a></li>
+				</ul>
+			</div><!-- /navbar -->
+		</div><!-- /footer -->
+	</div><!--page-->
+
+<!-- Animate Page-->
+      <div data-role="page" id="animate-page">
+       	<div id="App Header" data-theme="a" data-role="header">
+			<h1>Mustache Monitor</h1>
+       	</div>
+      	<div data-role="content">
+			<center>
+				<img src="img/ronb.gif" alt="Ron!" height="220" width="220" />
+			</center>	
+		</div>
+		<div data-role="footer"  data-id="myfooter" data-position="fixed">		
+			<div data-role="navbar" class="nav-icons-custom" data-grid="b">
+				<ul>
+					<li><a href="#capture-page" id="capture" data-icon="custom"></a></li>
+					<li><a href="#gallery-page" id="gallery" data-icon="custom"></a></li>
+					<li><a href="#animate-page" id="animate" data-icon="custom"class="ui-btn-active ui-state-persist"></a></li>
+				</ul>
+			</div><!-- /navbar -->
+		</div><!-- /footer -->
+	</div><!--page-->
+  </body>
 </html>
