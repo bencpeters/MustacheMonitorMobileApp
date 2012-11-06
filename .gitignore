@@ -1,12 +1,9 @@
 # built application files
+.DS_Store
+xcuserdata
+project.xcworkspace
 *.apk
 *.ap_
-
-# files for the dex VM
-*.dex
-
-# Java class files
-*.class
 
 # generated files
 bin/
