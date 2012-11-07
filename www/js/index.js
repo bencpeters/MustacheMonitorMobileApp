@@ -140,3 +140,4 @@ window.takeStashPicture = function(successCallback, errorCallback, options) {
     cordova.exec(successCallback, errorCallback, "StacheCam", "takePicture", args);
 };
 
+
