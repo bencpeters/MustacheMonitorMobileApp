@@ -112,7 +112,7 @@ function getImage() {
         options.chunkedMode = false;
 
         var ft = new FileTransfer();
-        ft.upload(imageURI, "http://www.mustachemonitor.com/upload", win, fail, options);
+        ft.upload(imageURI, "http://mustachemonitor.com/upload", win, fail, options);
     }
 
     function win(r) {
@@ -126,3 +126,39 @@ function getImage() {
         alert("An error has occurred: Code = " = error.code);
     }
 
+
+
+function logoutUser() {
+
+  $.ajax({
+      url: 'http://mustachemonitor.com/user/logout',
+      type: "GET", // TODO: POST
+      cache: false,
+      //data: '',
+      //contentType: "application/json; charset=utf-8",
+      //complete: function() {},
+      success: function(data) {
+          // Success
+
+          // $('#screenName').val('');
+          $('#password').val('');
+          $.mobile.changePage( $('#loading-page') );
+
+          return true;
+      },
+      error: function() {
+              
+        $('<div>').simpledialog2({
+          mode: 'blank',
+          headerText: 'Logout Error',
+          headerClose: true,
+          blankContent : 
+            "<ul data-role='listview'><li>An error occurred while logging out.</li></ul>"+
+            "<a rel='close' data-role='button' href='#'>OK</a>"
+        });
+
+        return false;
+    }
+  });
+
+}

@@ -1,0 +1,8 @@
+#loading-page-logo{ max-width: 100% }
+#login_form label{ font-weight: bold }
+
+#capture-page,
+#gallery-page,
+#animate-page{
+    background: #39a7c9 url(../img/stash-background-repeating.png);
+}

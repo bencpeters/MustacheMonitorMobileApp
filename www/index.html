@@ -4,11 +4,13 @@
 	<link rel="stylesheet" href="css/my.css" />
 	<link rel="stylesheet" href="lib/jquery-mobile-fluid960/jquery-mobile-fluid960.min.css" />"
 	<link rel="stylesheet" href="lib/jquery-mobile/jquery.mobile-1.2.0.min.css" />
+	<link rel="stylesheet" type="text/css" href="lib/jquery-mobile-simpledialog/jquery.mobile.simpledialog.min.css" />
 	<script type="text/javascript" src="cordova-2.2.0.js"></script>
     <!-- <script type="text/javascript" src="js/index.js"></script> -->
 	<script src="lib/jquery/jquery-1.8.2.min.js"></script> 
 	<script src="lib/jquery-mobile/jquery.mobile-1.2.0.min.js"></script>
 	<script src="lib/jquery.mobile.routerlite/jquery.mobile.routerlite.js"></script>
+	<script type="text/javascript" src="lib/jquery-mobile-simpledialog/jquery.mobile.simpledialog2.min.js"></script>
 	<script src="js/my.js"></script>
 	<script src="js/phone.js"></script>
     <title>Capture Photo test</title>
@@ -32,14 +34,30 @@
 	       	</div>
 	      	<div data-role="content">
 				<center>
-					<img src="img/Mustache-Monitor-trans.png" alt="Ron!" height="120" width="400" />
+					<img id="loading-page-logo" src="img/Mustache-Monitor-trans.png" alt="Ron!" height="120" width="400" />
 				</center>
-				<a href="#capture-page" data-role="button" data-theme="b" data-icon="arrow-r" data-iconpos="right">Let's get started!</a>
+				
 				<p>
 					Mustache Monitor was conceived on the eve of Movember - the preeminent month to raise awareness for Men's health. During Movember Men around the globe sprout upper lip hair and show off their industrious stache growth.  
 					Mustache Monitor is an iOS app to document daily stache production and create an animation of your incredible journey through Movember. What's better then having a robust stache? Sharing it with the world. 
 					Show your MO!
 				</p>	
+
+				<div class="ui-body ui-body-b">
+
+					<form id="login_form" method="POST" action="http://mustachemonitor.com/user/login" data-ajax="true">
+					    <label for="screenName">Username:</label>
+					    <input type="text" name="screenName" id="screenName" /><br/>
+
+					    <label for="password">Password:</label>
+					    <input type="password" name="password" id="password" /><br/>
+
+					    <button id="login_submit" type="submit" data-theme="b">Sign In</button>
+					    <!-- TODO: Build in-app reg process -->
+					    <a href="http://mustachemonitor.com/user/create" data-role="button" data-theme="a" data-icon="arrow-r" data-iconpos="right">Register</a>
+					</form>
+
+				</div>
 			</div>
 			<div data-role="footer" data-position="fixed">		
 				<h4>Share Your Stache!</h4>
@@ -56,7 +74,12 @@
 		    <button onclick="capturePhotoEdit();">Capture Editable Photo</button> <br>
 		    <button onclick="getPhoto(pictureSource.PHOTOLIBRARY);">From Photo Library</button><br>
 		    <button onclick="getPhoto(pictureSource.SAVEDPHOTOALBUM);">From Photo Album</button><br>
-			<button onclick="getImage();">Upload a Photo</button>
+			<button onclick="getImage();">Upload a Photo</button><br>
+			
+			<div class="ui-body ui-body-a">
+				<button onclick="logoutUser();" data-theme="e">Logout</button>
+			</div>
+
 		    <img style="display:none;width:60px;height:60px;" id="smallImage" src="" />
 		    <img style="display:none;" id="largeImage" src="" />	
 		</div>
