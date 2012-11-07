@@ -49,7 +49,6 @@ var app = {
 };
 
 window.takeStashPicture = function(successCallback, errorCallback, options) {
-    console.log('in take picture');
     options = options || {};
     // successCallback required
     if (typeof successCallback != "function") {
@@ -137,7 +136,7 @@ window.takeStashPicture = function(successCallback, errorCallback, options) {
     
     var args = [quality, destinationType, sourceType, targetWidth, targetHeight, encodingType,
                 mediaType, allowEdit, correctOrientation, saveToPhotoAlbum, popoverOptions];
-    console.log('about to go native');
+    
     cordova.exec(successCallback, errorCallback, "StacheCam", "takePicture", args);
 };
 
