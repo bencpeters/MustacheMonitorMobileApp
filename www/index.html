@@ -13,9 +13,28 @@
 	<script type="text/javascript" src="lib/jquery-mobile-simpledialog/jquery.mobile.simpledialog2.min.js"></script>
 	<script src="js/my.js"></script>
 	<script src="js/phone.js"></script>
+	<script type="text/javascript">
+	function init() {
+    if(isAndroid()){
+        $("script").attr("src", "android/js/cordova-2.2.0.js").appendTo("head");
+    }else if(isiOS()){
+        $("script").attr("src", "ios/js/cordova-2.2.0.js").appendTo("head");
+    }
+    document.addEventListener("deviceready",onDeviceReady,false);
+
+}
+
+function isAndroid(){
+    return navigator.userAgent.indexOf("Android") > 0;
+}
+
+function isiOS(){
+    return ( navigator.userAgent.indexOf("iPhone") > 0 || navigator.userAgent.indexOf("iPad") > 0 || navigator.userAgent.indexOf("iPod") > 0); 
+}
+	</script>
     <title>Capture Photo test</title>
   </head>
-  <body>
+  <body onLoad="init();">
 		
 <!-- Loading Page-->
 	      <div data-role="page" id="loading-page">
