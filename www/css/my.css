@@ -6,3 +6,11 @@
 #animate-page{
     background: #39a7c9 url(../img/stash-background-repeating.png);
 }
+
+/* Custom Icon buttons for footer nav */
+.nav-icons-custom .ui-btn .ui-btn-inner { padding-top: 40px !important; }
+.nav-icons-custom .ui-btn .ui-icon { width: 30px!important; height: 30px!important; margin-left: -15px !important; box-shadow: none!important; -moz-box-shadow: none!important; -webkit-box-shadow: none!important; -webkit-border-radius: 0 !important; border-radius: 0 !important; }
+#capture .ui-icon { background:  url(../img/bottom-menu-icon-capture-.png) 50% 500% no-repeat; background-size: 30px 30px; }
+#gallery .ui-icon { background:  url(../img/bottom-menu-icon-gallery.png) 50% 50% no-repeat; background-size: 30px 30px;  }
+#animate .ui-icon { background:  url(../img/bottom-menu-icon-animate-.png) 50% 50% no-repeat;  background-size: 30px 30px; }
+
