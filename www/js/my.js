@@ -22,9 +22,8 @@ jQuery(function($){
         $.ajax({
             url: $('#login_form').attr('action'),
             type: "POST",
-            data: JSON.stringify(credentials),
+            data: credentials,
             cache: false,
-            contentType: "application/json; charset=utf-8",
             //complete: function() {},
             success: function(data) {
                 // Validated
