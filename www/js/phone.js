@@ -125,8 +125,12 @@ function getImage() {
     }
 
 
+$('#gallery-page').live('pageshow',function(event, ui){
+  window.getUserImages();
+});
+                
 
-function logoutUser() {
+window.logoutUser = function() {
 
   $.ajax({
       url: 'http://mustachemonitor.com/user/logout',
@@ -160,6 +164,40 @@ function logoutUser() {
   });
 
 }
+
+window.getUserImages = function(){
+    
+      $.ajax({
+                url: 'http://mustachemonitor.com/user/images',
+                type: "GET",
+                cache: false,
+                //complete: function() {},
+                success: function(data) {
+
+                    $( "#galleryList" ).html(
+                      $( "#galleryTpl" ).render( { images: data } )
+                    );
+
+                    return true;
+                },
+                error: function() {
+                    
+                    $('<div>').simpledialog2({
+                        mode: 'blank',
+                        headerText: 'Error',
+                        headerClose: true,
+                        blankContent : 
+                          "<ul data-role='listview'><li>There was an error retrieving your images.</li></ul>"+
+                          "<a rel='close' data-role='button' href='#'>OK</a>"
+                    });
+
+                    return false;
+                }
+            });
+    }
+
+
+
 window.takeStashPicture = function(successCallback, errorCallback, options) {
     options = options || {};
     // successCallback required

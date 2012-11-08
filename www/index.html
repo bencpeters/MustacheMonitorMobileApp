@@ -5,34 +5,36 @@
 	<link rel="stylesheet" href="lib/jquery-mobile-fluid960/jquery-mobile-fluid960.min.css" />
 	<link rel="stylesheet" href="lib/jquery-mobile/jquery.mobile-1.2.0.min.css" />
 	<link rel="stylesheet" type="text/css" href="lib/jquery-mobile-simpledialog/jquery.mobile.simpledialog.min.css" />
-	<script type="text/javascript" src="cordova-2.2.0.js"></script>
+	<!-- <script type="text/javascript" src="cordova-2.2.0.js"></script> -->
     <!-- <script type="text/javascript" src="js/index.js"></script> -->
 	<script src="lib/jquery/jquery-1.8.2.min.js"></script> 
 	<script src="lib/jquery-mobile/jquery.mobile-1.2.0.min.js"></script>
 	<script src="lib/jquery.mobile.routerlite/jquery.mobile.routerlite.js"></script>
 	<script type="text/javascript" src="lib/jquery-mobile-simpledialog/jquery.mobile.simpledialog2.min.js"></script>
+	<script type="text/javascript" src="lib/jsrender/jsrender.min.js"></script>
+	
 	<script src="js/my.js"></script>
 	<script src="js/phone.js"></script>
 	<script type="text/javascript">
-	function init() {
-    if(isAndroid()){
-        $("script").attr("src", "android/js/cordova-2.2.0.js").appendTo("head");
-    }else if(isiOS()){
-        $("script").attr("src", "ios/js/cordova-2.2.0.js").appendTo("head");
-    }
-    document.addEventListener("deviceready",onDeviceReady,false);
+		function init() {
+		    if(isAndroid()){
+		        $("script").attr("src", "android/js/cordova-2.2.0.js").appendTo("head");
+		    }else if(isiOS()){
+		        $("script").attr("src", "ios/js/cordova-2.2.0.js").appendTo("head");
+		    }
+		    document.addEventListener("deviceready",onDeviceReady,false);
 
-}
+		}
 
-function isAndroid(){
-    return navigator.userAgent.indexOf("Android") > 0;
-}
+		function isAndroid(){
+		    return navigator.userAgent.indexOf("Android") > 0;
+		}
 
-function isiOS(){
-    return ( navigator.userAgent.indexOf("iPhone") > 0 || navigator.userAgent.indexOf("iPad") > 0 || navigator.userAgent.indexOf("iPod") > 0); 
-}
+		function isiOS(){
+		    return ( navigator.userAgent.indexOf("iPhone") > 0 || navigator.userAgent.indexOf("iPad") > 0 || navigator.userAgent.indexOf("iPod") > 0); 
+		}
 	</script>
-    <title>Capture Photo test</title>
+    <title>Mustache Monitor</title>
   </head>
   <body onLoad="init();">
 		
@@ -43,7 +45,7 @@ function isiOS(){
 	       	</div>
 	      	<div data-role="content">
 				<center>
-					<img id="loading-page-logo" src="img/Mustache-Monitor-trans.png" alt="Ron!" height="120" width="400" />
+					<img id="loading-page-logo" src="img/Mustache-Monitor-trans.png" alt="logo" height="120" width="400" />
 				</center>
 				
 				<p>
@@ -74,7 +76,7 @@ function isiOS(){
 <!-- Capture Page-->
       <div data-role="page" id="capture-page">
        	<div id="App Header" data-theme="a" data-role="header">
-			<h1>Mustache Monitor</h1>
+			<h1>Stache Capture</h1>
        	</div>
       	<div data-role="content">
 			<button onclick="capturePhoto();">Capture Photo</button> <br>
@@ -103,26 +105,28 @@ function isiOS(){
 <!-- Gallery Page-->
       <div data-role="page" id="gallery-page">
        	<div id="App Header" data-theme="a" data-role="header">
-			<h1>Mustache Monitor</h1>
+			<h1>Stache Gallery</h1>
        	</div>
-      	<div data-role="content">
-			<div class="ui-grid-b">
-				<div class="ui-block-a"><div class="ui-bar ui-bar-e" style="height:120px"><img src="img/borat.jpeg" alt="Borat" height="120" width="120" /></div></div>
-				<div class="ui-block-b"><div class="ui-bar ui-bar-e" style="height:120px"><img src="img/borat.jpeg" alt="Borat" height="120" width="120" /></div></div>
-				<div class="ui-block-c"><div class="ui-bar ui-bar-e" style="height:120px"><img src="img/borat.jpeg" alt="Borat" height="120" width="120" /></div></div>
-				<div class="ui-block-a"><div class="ui-bar ui-bar-e" style="height:120px"><img src="img/borat.jpeg" alt="Borat" height="120" width="120" /></div></div>
-				<div class="ui-block-b"><div class="ui-bar ui-bar-e" style="height:120px"><img src="img/borat.jpeg" alt="Borat" height="120" width="120" /></div></div>
-				<div class="ui-block-c"><div class="ui-bar ui-bar-e" style="height:120px"><img src="img/borat.jpeg" alt="Borat" height="120" width="120" /></div></div>
-				<div class="ui-block-a"><div class="ui-bar ui-bar-e" style="height:120px"><img src="img/borat.jpeg" alt="Borat" height="120" width="120" /></div></div>
-				<div class="ui-block-b"><div class="ui-bar ui-bar-e" style="height:120px"><img src="img/borat.jpeg" alt="Borat" height="120" width="120" /></div></div>
-				<div class="ui-block-c"><div class="ui-bar ui-bar-e" style="height:120px"><img src="img/borat.jpeg" alt="Borat" height="120" width="120" /></div></div>
-			</div><!-- /grid-c -->		
+      	<div data-role="content" class="content">
+
+			<script id="galleryTpl" type="text/x-jsrender">
+				{{for images}}
+					<div class="ui-block-{{>block}}">
+						<div class="ui-bar ui-bar-e">
+							<center><img src="http://mustachemonitor.com/image/{{>id}}" alt="" /></center>
+						</div>
+					</div>
+				{{/for}}
+			</script>
+			
+			<div id="galleryList" class="ui-grid-b"></div>
+
 		</div>
-		<div data-role="footer"  data-id="myfooter" data-position="fixed">		
+		<div data-role="footer" data-id="myfooter" data-position="fixed">		
 			<div data-role="navbar" class="nav-icons-custom" data-grid="b">
 				<ul>
 					<li><a href="#capture-page" id="capture" data-icon="custom" data-transition="slide" data-direction="reverse"></a></li>
-					<li><a href="#gallery-page" id="gallery" data-icon="custom"class="ui-btn-active ui-state-persist"></a></li>
+					<li><a href="#gallery-page" id="gallery" data-icon="custom" class="ui-btn-active ui-state-persist"></a></li>
 					<li><a href="#animate-page" id="animate" data-icon="custom" data-transition="slide"></a></li>
 				</ul>
 			</div><!-- /navbar -->
@@ -132,7 +136,7 @@ function isiOS(){
 <!-- Animate Page-->
       <div data-role="page" id="animate-page">
        	<div id="App Header" data-theme="a" data-role="header">
-			<h1>Mustache Monitor</h1>
+			<h1>Animated Staches</h1>
        	</div>
       	<div data-role="content">
 			<center>
